@@ -8,6 +8,7 @@
   <style>
 :root {
   --ink: #FFF8F1;         /* dark brown text */
+  --darkInk: #3b1e00;
   --parchment: #21313A;   /* base background */
   --parchment-2: #82A49D; /* alternate parchment tone */
   --accent: #8b3a3a;      /* primary accent */
@@ -30,7 +31,7 @@ body {
   padding: 20px;
 }
 
-h1, h2 {
+h1, h2, h3 {
   font-family: "Merriweather", serif;
   color: var(--ink);
 }
@@ -183,16 +184,19 @@ h2 a:hover {
 }
 
 #goals li, #wheel li {
-  padding: 8px 10px;
-  margin: 6px 0;
+  color: var(--darkInk); 
+  padding: 10px 14px;
+  margin: 8px 0;
   border-left: 4px solid var(--accent);
   background: #fffaf0cc;
-  transition: background 0.3s ease, border-color 0.3s ease;
+  border-radius: 10px;              /* ✅ Rounded corners */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   font-weight: 600;
   text-align: left;
+  transition: background 0.3s ease, border-color 0.3s ease;
 }
 
-/* Completed goal */
+/* Completed goal (static state) */
 #goals li.done {
   border-color: green;
   background: #e6f5e6;
@@ -205,6 +209,23 @@ h2 a:hover {
   border-left: 4px dashed var(--accent-2);
   background: #fdf6e3cc;
   font-style: italic;
+}
+
+/* Sequential animation */
+@keyframes goalUnlock {
+  from {
+    background: #fffaf0cc;
+    border-color: var(--accent);
+    color: var(--ink);
+  }
+  to {
+    background: #e6f5e6;
+    border-color: green;
+    color: #2e5d2e;
+  }
+}
+#goals li.animate {
+  animation: goalUnlock 0.6s forwards;
 }
   </style>
 </head>
@@ -233,13 +254,21 @@ h2 a:hover {
   </div>
   
   <div class="card" id="wheel">
-  <h3>🎡 Wheel of Punishments</h3>
+  <h2>Wheel of Punishments</h2>
   <ul>
-    <li>Sing a cursed song</li>
-    <li>Draw with my non-dominant hand</li>
-    <li>Wear silly costume piece</li>
-    <li>Chat chooses my game for an hour</li>
-    <li>Hot sauce shot</li>
+    <li>Play a game of league</li>
+    <li>Drink hot sauce</li>
+    <li>Use mommy voice for 10 minutes</li>
+    <li>Chat chooses a gif to put on Kiyomi</li>
+    <li>Puck against Bawks</li>
+    <li>Left hand doodle</li>
+    <li>Icecube in shirt</li>
+    <li>No punishment</li>
+    <li>Ask a friend to insult me</li>
+    <li>Do nothing for 5 minutes</li>
+    <li>Combine 3 edible things and eat it</li>
+    <li>Redeem 80% - 90% discount for 1 minute</li>
+    <li>Take a shower RN!!! >:(</li>
   </ul>
 </div>
 
@@ -248,15 +277,35 @@ h2 a:hover {
   </div>
 
   <div class="card" id="goals">
-  <h3>Milestone Goals</h3>
+  <h2>Milestone Goals</h2>
   <ul>
-    <li data-goal="10">100 Subs — Karaoke Stream</li>
-    <li data-goal="200">200 Subs — Cooking Stream</li>
-    <li data-goal="400">400 Subs — Cosplay Stream</li>
-    <li data-goal="600">600 Subs — 24 Hour Stream</li>
+    <li data-goal="10">10 Subs — Chat chooses game to play next stream</li>
+    <li data-goal="15">15 Subs — Chat chooses preset outfit for Kie</li>
+    <li data-goal="25">25 Subs — Discord movie night</li>
+    <li data-goal="50">50 Subs - Chat chooses animated emote</li>
+    <li data-goal="75">75 Subs — FPS gamer gauntlet</li>
+    <li data-goal="100">100 Subs — Chat crowd control PEAK</li>
+    <li data-goal="125">125 Subs — Horror game with Bawks</li>
+    <li data-goal="150">150 Subs — Next art piece chosen by chat</li>
+    <li data-goal="175">175 Subs — Chat picks next cover song</li>
+    <li data-goal="200">200 Subs — Get a Scrungly model</li>
+    <li data-goal="225">225 Subs — Future Lego building stream</li>
+    <li data-goal="250">250 Subs — Chat picks permanant stream redeem</li>
+    <li data-goal="275">275 Subs — Future VR stream</li>
+    <li data-goal="300">300 Subs — Future clay sculpting stream</li>
+    <li data-goal="325">325 Subs — VA Anime panels/comics</li>
+    <li data-goal="350">350 Subs — Crane game challange $110</li>
+    <li data-goal="375">375 Subs — Play Elden Ring or Dark Souls</li>
+    <li data-goal="400">400 Subs — KareoKie stream</li>
+    <li data-goal="450">450 Subs — Kiyomi voice pack</li>
+    <li data-goal="475">475 Subs — Splash art of me</li>
+    <li data-goal="525">525 Subs — 3D Model</li>
+    <li data-goal="600">600 Subs — Limited merch release</li>
   </ul>
 </div>
 
+
+Site by Grimwitch
 
   
   <div id="lightbox" class="lightbox" onclick="closeLightbox()">
@@ -265,10 +314,7 @@ h2 a:hover {
 <canvas id="leaves"></canvas>
   <script>
     function openLightbox(img) {
-      const lightbox = document.getElementById('lightbox');
-      const lightboxImg = document.getElementById('lightbox-img');
-      lightbox.style.display = 'flex';
-      lightboxImg.src = img.src;
+
     }
 
   window.addEventListener("DOMContentLoaded", () => {
@@ -366,17 +412,39 @@ h2 a:hover {
 
   drawLeaves();
   
-   window.addEventListener("DOMContentLoaded", () => {
+  window.addEventListener("DOMContentLoaded", () => {
     const subsBox = document.getElementById("subsProgress");
     const cur = +subsBox.dataset.current;
+    const goals = document.querySelectorAll("#goals li");
 
-    // Check off goals
-    document.querySelectorAll("#goals li").forEach(li => {
+    // Mark which goals are eligible
+    goals.forEach(li => {
       const goal = +li.dataset.goal;
       if (cur >= goal) {
-        li.classList.add("done");
+        li.classList.add("ready"); // eligible but not animated yet
       }
     });
+
+    // Observer triggers when #goals is visible
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          let delay = 0;
+          goals.forEach(li => {
+            if (li.classList.contains("ready")) {
+              setTimeout(() => {
+                li.classList.add("animate");
+                li.classList.add("done"); // permanent styling after animation
+              }, delay);
+              delay += 500; // 0.5s stagger
+            }
+          });
+          observer.unobserve(entry.target); // only run once
+        }
+      });
+    }, { threshold: 0.2 });
+
+    observer.observe(document.getElementById("goals"));
   });
   </script>
 </body>
