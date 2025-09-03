@@ -7,9 +7,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Merriweather:wght@700&display=swap" rel="stylesheet">
   <style>
 :root {
-  --ink: #4a2e2e;         /* dark brown text */
-  --parchment: #f7eed0;   /* base background */
-  --parchment-2: #fdf6e3; /* alternate parchment tone */
+  --ink: #FFF8F1;         /* dark brown text */
+  --parchment: #21313A;   /* base background */
+  --parchment-2: #82A49D; /* alternate parchment tone */
   --accent: #8b3a3a;      /* primary accent */
   --accent-2: #c85d5d;    /* lighter accent */
   --gold: #d4b483;        /* subtle gold border */
@@ -55,12 +55,14 @@ h2 a:hover {
 
 /* Cards */
 .card {
-  background: #fffaf0cc;
+  background: #24404A;
   border: 2px solid var(--gold);
   border-radius: 14px;
   padding: 18px;
   margin: 20px 0;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  width: 90%;
+  max-width: 1040px;
 }
 
 /* Progress */
@@ -174,6 +176,36 @@ h2 a:hover {
   z-index: -1;          /* behind content */
   pointer-events: none; /* don’t block clicks */
 }
+#goals ul, #wheel ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#goals li, #wheel li {
+  padding: 8px 10px;
+  margin: 6px 0;
+  border-left: 4px solid var(--accent);
+  background: #fffaf0cc;
+  transition: background 0.3s ease, border-color 0.3s ease;
+  font-weight: 600;
+  text-align: left;
+}
+
+/* Completed goal */
+#goals li.done {
+  border-color: green;
+  background: #e6f5e6;
+  color: #2e5d2e;
+  font-weight: bold;
+}
+
+/* Punishment wheel flair */
+#wheel li {
+  border-left: 4px dashed var(--accent-2);
+  background: #fdf6e3cc;
+  font-style: italic;
+}
   </style>
 </head>
 <body>
@@ -194,9 +226,38 @@ h2 a:hover {
 
   <div class="images">
     <img  src="Incentives.png" alt="Subathon Image 1" onclick="openLightbox(this)">
+  </div>
+  
+  <div class="images">
     <img  src="Wheel.png" alt="Subathon Image 2" onclick="openLightbox(this)">
+  </div>
+  
+  <div class="card" id="wheel">
+  <h3>🎡 Wheel of Punishments</h3>
+  <ul>
+    <li>Sing a cursed song</li>
+    <li>Draw with my non-dominant hand</li>
+    <li>Wear silly costume piece</li>
+    <li>Chat chooses my game for an hour</li>
+    <li>Hot sauce shot</li>
+  </ul>
+</div>
+
+  <div class="images">
     <img  src="Milestones.webp" alt="Subathon Image 3" onclick="openLightbox(this)">
   </div>
+
+  <div class="card" id="goals">
+  <h3>Milestone Goals</h3>
+  <ul>
+    <li data-goal="10">100 Subs — Karaoke Stream</li>
+    <li data-goal="200">200 Subs — Cooking Stream</li>
+    <li data-goal="400">400 Subs — Cosplay Stream</li>
+    <li data-goal="600">600 Subs — 24 Hour Stream</li>
+  </ul>
+</div>
+
+
   
   <div id="lightbox" class="lightbox" onclick="closeLightbox()">
     <img id="lightbox-img" src="" alt="Expanded Image">
@@ -290,6 +351,7 @@ h2 a:hover {
         ctx.save();
         ctx.translate(leaf.x, leaf.y);
         ctx.rotate(leaf.angle);
+		ctx.globalAlpha = 0.7;
         ctx.drawImage(
           leaf.sprite,
           -leaf.size / 2, -leaf.size / 2,
@@ -303,6 +365,19 @@ h2 a:hover {
   }
 
   drawLeaves();
+  
+   window.addEventListener("DOMContentLoaded", () => {
+    const subsBox = document.getElementById("subsProgress");
+    const cur = +subsBox.dataset.current;
+
+    // Check off goals
+    document.querySelectorAll("#goals li").forEach(li => {
+      const goal = +li.dataset.goal;
+      if (cur >= goal) {
+        li.classList.add("done");
+      }
+    });
+  });
   </script>
 </body>
 </html>
