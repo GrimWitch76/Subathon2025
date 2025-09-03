@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subathon</title>
+  <style>
+	body {
+	  margin: 0;
+	  padding: 0;
+	  background: linear-gradient(135deg, #fdf6e3, #f7eed0); /* soft parchment gradient */
+	  font-family: Arial, sans-serif;
+	  display: flex;
+	  flex-direction: column;
+	  align-items: center;
+	  justify-content: flex-start;
+	  min-height: 100vh;
+	  color: #4a2e2e; /* dark brown text */
+	  text-align: center;
+	  padding: 20px;
+	}
+    h1 {
+      margin-bottom: 10px;
+      font-size: 2.5rem;
+    }
+
+	h2 a {
+	  display: inline-block;
+	  background: #8b3a3a; /* muted red */
+	  color: #fff;
+	  text-decoration: none;
+	  padding: 12px 24px;
+	  border-radius: 8px;
+	  font-size: 1.2rem;
+	  font-weight: bold;
+	  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+	  transition: background 0.2s ease, transform 0.2s ease;
+	}
+
+	h2 a:hover {
+	  background: #a44a4a;
+	  transform: scale(1.05);
+	}
+
+	.progress-container {
+	  width: 90%;
+	  max-width: 600px;
+	  margin: 30px auto;
+	  background: #fdf6e3; /* parchment tone */
+	  border: 2px solid #8b3a3a; /* muted red border */
+	  border-radius: 15px;
+	  padding: 15px;
+	  color: #4a2e2e; /* dark brown text */
+	  font-weight: bold;
+	}
+
+	.progress-bar {
+	  width: 100%;
+	  height: 30px;
+	  background: #eee0c9; /* soft cream */
+	  border-radius: 15px;
+	  overflow: hidden;
+	  position: relative;
+	  border: 1px solid #8b3a3a;
+	}
+
+    .progress-bar {
+      width: 100%;
+      height: 30px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 15px;
+      overflow: hidden;
+      position: relative;
+    }
+
+
+	.progress-fill {
+	  height: 100%;
+	  width: 40%; /* update manually */
+	  background: linear-gradient(90deg, #c85d5d, #8b3a3a);
+	  border-radius: 15px 0 0 15px;
+	  transition: width 0.5s ease;
+	}
+
+    .images {
+      display: flex;
+      flex-direction: row;
+      gap: 30px;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 95%;
+      margin-top: 30px;
+    }
+
+	.images img {
+	  width: 1080px;
+	  max-width: 100%;
+	  border-radius: 12px;
+	  border: 2px solid #d4b483; /* subtle gold/tan border */
+	  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+	  cursor: pointer;
+	  transition: transform 0.2s ease;
+	}
+
+    .images img:hover {
+      transform: scale(1.02);
+    }
+
+    @media (max-width: 768px) {
+      .images {
+        flex-direction: column;
+      }
+      .images img {
+        width: 100%;
+      }
+    }
+
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .lightbox img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome to the Subathon!</h1>
+  <h2><a href="https://www.twitch.tv/tanukiyomi" target="_blank">Watch the Stream</a></h2>
+
+  <div class="progress-container">
+    <div class="progress-label">Current Subs: 82 / 600</div>
+    <div class="progress-bar">
+      <div class="progress-fill"></div>
+    </div>
+  </div>
+
+  <div class="images">
+    <img src="Incentives.png" alt="Subathon Image 1" onclick="openLightbox(this)">
+    <img src="Wheel.png" alt="Subathon Image 2" onclick="openLightbox(this)">
+    <img src="Milestones.webp" alt="Subathon Image 3" onclick="openLightbox(this)">
+  </div>
+
+  <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+    <img id="lightbox-img" src="" alt="Expanded Image">
+  </div>
+
+  <script>
+    function openLightbox(img) {
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      lightbox.style.display = 'flex';
+      lightboxImg.src = img.src;
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
